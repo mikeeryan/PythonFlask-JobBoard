@@ -41,5 +41,17 @@ def close_connection(exception):
 def jobs():
     # do not split lines on the sql query
     jobs = execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name FROM job JOIN employer ON employer.id = job.employer_id')
-    # pass the results to the flask macro
+    # pass the results to the flask render_template method (Jinja2 engine)
+    # .html must be in /templates
     return render_template('index.html', jobs=jobs)
+    # in index.html the flask macro show_jobs(jobs) is called with my list jobs as the parameter
+
+# fn to display a job
+@app.route('/job/<job_id>')
+def job(job_id):
+    # but how is this job passed into the template? by query
+    # also created a url in the show_job macro
+    job = execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name FROM job JOIN employer ON employer.id = job.employer_id WHERE job.id = ?'
+                      ,[job_id], single=True)
+    # where only 1 job will be returned - ? is a placeholder for id
+    return render_template('job.html', job=job)

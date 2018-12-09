@@ -5,6 +5,8 @@
 <html>
   <head>
     <title>Job Board</title>
+    <!-- Flask: generates urls for static files
+      cannot just point to their addr-->
       <link rel="stylesheet" href="{{ url_for('static',
       filename='css/bulma.min.css')}}">
       <link rel="stylesheet" href="{{ url_for('static',
@@ -15,6 +17,7 @@
   <body>
     <div class="container top">
       <div class="content">
+        <!-- only this part will be over-ridden with content  -->
         {% block content %}
         {% endblock %}
       </div>
