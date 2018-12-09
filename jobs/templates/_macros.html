@@ -1,4 +1,5 @@
-<!-- flask will pull the data from db - job is a parameter for macro -->
+<!-- flask will pull the data from db - job is (a dict created by a query
+    ) passed as a parameter for macro -->
 
 {% macro show_job(job) %}
 <div class="card adjust-height">
@@ -10,7 +11,8 @@
   <div class="card-content">
     <div class="content">
         <p>
-        <a href="">{{ job['employer_name'] }}</a>
+        <a href="{{ url_for('employer',employer_id = job['employer_id']) }}">
+            {{ job['employer_name'] }}</a>
             <br>
             ${{ job['salary'] }}<br>
             {{ job['description'] }}

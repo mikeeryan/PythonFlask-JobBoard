@@ -46,7 +46,7 @@ def jobs():
     return render_template('index.html', jobs=jobs)
     # in index.html the flask macro show_jobs(jobs) is called with my list jobs as the parameter
 
-# fn to display a job
+# fn to display a job - the "job" is a dict from which will pull data into other places
 @app.route('/job/<job_id>')
 def job(job_id):
     # but how is this job passed into the template? by query
@@ -55,3 +55,15 @@ def job(job_id):
                       ,[job_id], single=True)
     # where only 1 job will be returned - ? is a placeholder for id
     return render_template('job.html', job=job)
+
+# for the employer_id found from the job dict/query
+# run another query to pull full employer info
+@app.route('/employer/<employer_id>')
+def employer(employer_id):
+    employer = execute_sql('SELECT * FROM employer WHERE id  = ?'
+                           ,[employer_id], single=True)
+    jobs = execute_sql('SELECT job.id, job.title, job.description, job.salary FROM job JOIN employer ON employer.id = job.employer_id WHERE employer.id = ?'
+                              ,[employer_id])
+    reviews = execute_sql('SELECT review, rating, title, date, status FROM review JOIN employer ON employer.id = review.employer_id WHERE employer.id = ?'
+                          ,[[employer_id])
+    return render_template('employer.html', employer=employer, jobs=jobs, reviews=reviews)
