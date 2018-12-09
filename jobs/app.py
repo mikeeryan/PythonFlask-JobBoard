@@ -1,6 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, g, request, redirect, url_for
 # g is global helper - Global namespace to access the db
+import datetime
 
 PATH = 'db/jobs.sqlite'  # own format file, mini-DB in one file
 
