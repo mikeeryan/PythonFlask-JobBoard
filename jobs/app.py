@@ -39,14 +39,7 @@ def close_connection(exception):
 @app.route('/')
 @app.route('/jobs')
 def jobs():
-    jobs = execute_sql(
-        '
-        SELECT job.id, job.title, job.description
-        , job.salary, employer.id as employer_id
-        , employer.name as employer_name
-        FROM job JOIN employer
-        ON employer.id = job.employer_id
-        '
-    )
-    # now pass the results into the flask macro
+    # do not split lines on the sql query
+    jobs = execute_sql('SELECT job.id, job.title, job.description, job.salary, employer.id as employer_id, employer.name as employer_name FROM job JOIN employer ON employer.id = job.employer_id')
+    # pass the results to the flask macro
     return render_template('index.html', jobs=jobs)
