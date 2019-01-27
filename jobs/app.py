@@ -3,7 +3,8 @@ from flask import Flask, render_template, g, request, redirect, url_for
 # g is global helper - Global namespace to access the db
 import datetime
 
-PATH = 'db/jobs.sqlite'  # own format file, mini-DB in one file
+#PATH = 'db\jobs.sqlite'  # own format file, mini-DB in one file
+PATH = r'C:\Users\rf\Google Drive\Education\Python\Codes\Pluralsight\Python_path\PythonFlask-JobBoard\db\jobs.sqlite'  # own format file, mini-DB in one file
 
 app = Flask(__name__)
 
